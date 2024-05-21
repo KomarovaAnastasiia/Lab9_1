@@ -1,0 +1,45 @@
+// Структура для зберігання відомостей про абітурієнтів
+struct Applicant {
+    int schoolNumber;
+    int year;
+    std::string surname;
+};
+
+int main() {
+    // Ввід данних
+    std::vector<Applicant> applicants = {
+        {1, 2022, "Ivanov"},
+        {2, 2022, "Petrov"},
+        {1, 2023, "Sidorov"},
+        {3, 2022, "Fedorov"},
+        {2, 2023, "Ivanov"},
+        {1, 2022, "Petrov"}
+        // Додайте більше даних за необхідності
+    };
+
+    // Відображення для зберігання року та безлічі шкіл
+    std::map<int, std::set<int>> yearToSchools;
+
+    // Заповнення відображення
+    for (const auto& applicant : applicants) {
+        yearToSchools[applicant.year].insert(applicant.schoolNumber);
+    }
+
+    // Вектор для зберігання результату у вигляді пари <число шкіл, рік>
+    std::vector<std::pair<int, int>> result;
+
+    // Заповнення результуючого вектора
+    for (const auto& entry : yearToSchools) {
+        result.emplace_back(entry.second.size(), entry.first);
+    }
+
+    // Сортування результуючого вектора за зростанням кількості шкіл і року
+    std::sort(result.begin(), result.end());
+
+    // Висновок результату
+    for (const auto& entry : result) {
+        std::cout << entry.first << " " << entry.second << std::endl;
+    }
+
+    return 0;
+}
